@@ -1,0 +1,38 @@
+@host=http://localhost:4000
+
+GET {{host}}/healthcheck
+Content-Type: application/json
+
+###
+# @name CreateTodo
+POST {{host}}/api/todo
+Content-Type: application/json
+
+{
+    "name": "test todo 1",
+    "description": "test description todo 1"
+}
+
+###
+@todoId = {{CreateTodo.response.body.content.id}}
+
+###
+GET {{host}}/api/todo
+Content-Type: application/json
+
+###
+GET {{host}}/api/todo/{{todoId}}
+Content-Type: application/json
+
+###
+PUT {{host}}/api/todo/{{todoId}}
+Content-Type: application/json
+
+{
+    "name": "test todo 1 update",
+    "description": "test description todo 1 update"
+}
+
+###
+DELETE {{host}}/api/todo/{{todoId}}
+Content-Type: application/json
